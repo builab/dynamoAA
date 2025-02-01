@@ -1,6 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Set up the project
-% dynamoDMT v1.0 (now working with Warp workflow)
+% dynamoAA v1.0 (now working with Warp workflow)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Import tomogram & create catalog using the GUI
 % required IMOD
@@ -32,7 +32,7 @@ useWarpRec = 1;
 
 %%%%%%% Do not change anything under here %%%%%
 
-pathToModelScript = fullfile(sprintf('%sdynamoDMT', prjPath), 'createModTxt.sh');
+pathToModelScript = fullfile(sprintf('%sdynamoAA', prjPath), 'createModTxt.sh');
 cmdStr = [pathToModelScript ' ' modDir ' ' modFileDelimiter ' ' prjPath];
 system(cmdStr);
 modelfile = sprintf('%smodfiles.txt', prjPath);
@@ -55,9 +55,9 @@ vllFilePath = sprintf('%scatalogs/tomograms.vll', prjPath);
 % $./vllAndDocScript.sh modDir modelDestination modelfile stringTobeRemoved docFilePath vllFilePath 
 
 if useWarpRec > 0
-	pathToModelScript = fullfile(sprintf('%sdynamoDMT', prjPath), 'vllAndDocScriptWarp.sh');
+	pathToModelScript = fullfile(sprintf('%sdynamoAA', prjPath), 'vllAndDocScriptWarp.sh');
 else
-	pathToModelScript = fullfile(sprintf('%sdynamoDMT', prjPath), 'vllAndDocScript.sh');
+	pathToModelScript = fullfile(sprintf('%sdynamoAA', prjPath), 'vllAndDocScript.sh');
 end
 cmdStr = [pathToModelScript ' ' modDir ' ' listOfTomograms ' ' modelfile ' ' stringToBeRemoved ' ' docFilePath ' ' vllFilePath ' ' recSuffix '.mrc ' apixel];
 system(cmdStr);
@@ -69,7 +69,7 @@ dcm('c', catPath, 'fromvll', vllFilePath, 'delete_old', 1)
 % Imod coordinate should be in text file, clicking along the filament (no direction needed)
 % model2point -Contour imodModel.mod imodModel.txt
 
-pathToModelScript = fullfile(sprintf('%sdynamoDMT', prjPath), 'model2pointscript.sh');
+pathToModelScript = fullfile(sprintf('%sdynamoAA', prjPath), 'model2pointscript.sh');
 
 cmdStr = [pathToModelScript ' ' modDir ' ' modelDir ' ' modelfile ' ' stringToBeRemoved];
 system(cmdStr);
