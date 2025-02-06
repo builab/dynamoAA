@@ -90,7 +90,7 @@ for idx = 1:nTomo
 			% Extract column 9 from the middle region and compute the median
 			phi = median(tContour(middleStart:middleEnd, 9));
 		end
-		% This actually make error to find
+		% This actually make less error to find
 		[~, phi_idx] = min(abs(tContour(:, 9) - phi));
 		phi_xyz = tContour(phi_idx, 24:26);
 		fprintf('Median of Phi: %.4f\n', phi);
@@ -105,7 +105,7 @@ for idx = 1:nTomo
         end
         %%%% End exclude
 		
-		%%%% Flip polarity if is shown in the filamentList
+	%%%% Flip polarity if is shown in the filamentList
         filamentName = [tomoName '_' num2str(contour(i))];
         % Look up for polarity
         filIdx = find(strcmp(filamentList(:, 1), filamentName));
@@ -113,14 +113,16 @@ for idx = 1:nTomo
         if polarity > 0
             tContour = flipud(tContour);
             disp([filamentName ' - flip polarity']);
-        end
+	else
+		disp([filamentName ' - no flip']);
+	end
         %%%% End flipping
    
         if isempty(tContour) == 1
             continue;
         end
 
-        points = tContour(:, 24:26) + tContour(:, 4:6)
+        points = tContour(:, 24:26) + tContour(:, 4:6);
       
         m{i} = dmodels.filamentWithTorsion();
         m{i}.subunits_dphi = subunits_dphi;
@@ -145,18 +147,17 @@ for idx = 1:nTomo
         end
         
         %%%% Set contourID
-        fprintf('Assign contourID %d\n', i);
+	fprintf('Assign contourID %d\n', i);
         t(:,23) = contour(i); % Additing contour number (filament)
         
         if doInitialAngle > 0
         	% Find the point in t nearest to phi_xyz
         	% Compute squared Euclidean distances to avoid unnecessary sqrt computation
         	distances = sum((t(:, 24:26) - phi_xyz).^2, 2);
-			% Find the index of the closest point
-			[~, minIndex] = min(distances);
-            % Set the phi angle of the minIndex same as phi
-            t(:, 9) = t(:, 9) - t(minIndex, 9) + phi; 
-            print(['Assign initial angle of' num2str(phi)])
+		% Find the index of the closest point
+		[~, minIndex] = min(distances);
+            	% Set the phi angle of the minIndex same as phi
+            	t(:, 9) = t(:, 9) - t(minIndex, 9) + phi; 
         end
         
         % Check point
@@ -219,4 +220,5 @@ end
 
 %% Write filament list out
 writecell(filamentRepickList, filamentRepickListFile);
+
 
