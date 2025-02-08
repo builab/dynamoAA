@@ -65,8 +65,8 @@ for idx = 1:noFilament
     
     %vol = dpkgeom.rotation.smoothShiftRot(filamentAvg, Tp.shifts, Tp.eulers);
 	%rotatedVol = dpkgeom.rotation.smoothShiftRot(filamentAvg, [0,0,0], Tp.eulers);
-    flippedVol = dpkgeom.rotation.smoothShiftRot(filamentAvg, [0,0,0], [0, Tp.eulers(2), 0]);
-    rotatedVol = dpkgeom.rotation.smoothShiftRot(flippedVol, [0,0,0], [Tp.eulers(1), 0, Tp.eulers(3)]);
+    filamentAvg = dpkgeom.rotation.smoothShiftRot(filamentAvg, [0,0,0], [0, Tp.eulers(2), 0]);
+    filamentAvg = dpkgeom.rotation.smoothShiftRot(filamentAvg, [0,0,0], [Tp.eulers(1), 0, Tp.eulers(3)]);
     vol = dpkgeom.rotation.smoothShiftRot(rotatedVol, Tp.shifts, [0,0,0]);
     
     
@@ -76,8 +76,7 @@ for idx = 1:noFilament
     filt_aligned_particle = dynamo_bandpass(vol, [1 round(pixelSize/avgLowpass*boxSize)]);
     img = sum(filt_aligned_particle(:,:,floor(boxSize/2) - 10: floor(boxSize/2) + 10), 3);
     img_rotated = flipud(img'); % Rotate 90° counterclockwise
-    % imwrite(mat2gray(img_rotated), [particleDir '/' filamentList{idx,1} '/' filamentList{idx,1} '_manual_aln.png']);
-    imwrite(mat2gray(img_rotated), [previewDir '/' filamentList{idx,1} '_manual_aln.png']);
+    imwrite(mat2gray(img_rotated), [particleDir '/' filamentList{idx,1} '/' filamentList{idx,1} '_manual_aln.png']);
 
     % Flips polarity if modified
 	if t_xform(1,5) > 90
