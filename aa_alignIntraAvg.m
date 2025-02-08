@@ -29,6 +29,7 @@ alnLowpass = 28; % Angstrom
 shiftLimit = [10 10 4]; % Limit XYZ in pixel. Z should be half of periodicity
 newRefFile = 'average_intraAln.em';
 filamentPolarityListFile = sprintf('%sfilamentListPolarity.csv', prjPath);
+maskFile = sprintf('%smask_cylinder_doublet.em', prjPath); % Cylinder mask, must be quite big
 combinedPreviewsDir = fullfile(previewDir, 'combined_previews');
 
 %%%%%%% Do not change anything under here %%%%%
@@ -63,7 +64,7 @@ for idx = 1:noFilament
 	tPath = ddb([filamentList{idx} ':rt']);
 	filamentAvg = dread(aPath);
   	disp(['Align ' filamentList{idx}]);
-  	sal = dalign(dynamo_bandpass(filamentAvg,[1 alnLowpassPix]), dynamo_bandpass(template,[1 alnLowpassPix]),'cr',10,'cs',5,'ir',360,'is',10,'dim',boxSize, 'limm',1,'lim',shiftLimit,'rf',2,'rff',2, 'cone_flip', coneFlip); % cone_flip
+  	sal = dalign(dynamo_bandpass(filamentAvg,[1 alnLowpassPix]), dynamo_bandpass(template,[1 alnLowpassPix]), 'mask', maskFile, 'cr',10,'cs',5,'ir',360,'is',10,'dim',boxSize, 'limm',1,'lim',shiftLimit,'rf',2,'rff',2, 'cone_flip', coneFlip); % cone_flip
 	
 	% Write out the transform
 	writematrix([sal.p_shifts sal.p_eulers], [particleDir '/' filamentList{idx} '/xform.tbl'], 'Delimiter', 'tab', 'FileType', 'text');
