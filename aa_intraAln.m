@@ -80,7 +80,7 @@ for idx = 1:length(filamentList)
     img = sum(filamentAvg(:,:,floor(boxSize/2) - 5: floor(boxSize/2) + 5), 3);
     % .png preview is rotated 90 deg clockwise, so we rotate 90 deg CC
     img_rotated = flipud(img');
-    imwrite(mat2gray(img), ['preview/' filamentList{idx} '.png'])
+    imwrite(mat2gray(img_rotated), ['preview/' filamentList{idx} '.png'])
 end
 
 cd ..
