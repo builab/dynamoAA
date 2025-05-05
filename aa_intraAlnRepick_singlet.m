@@ -12,7 +12,7 @@
 run /data2/apps/dynamo/1.1.546/dynamo_activate.m 
 
 % Change path to the correct directory
-prjPath = '/mnt/lima/huy/data0/20221128_TetraCU428Membrane_26k_TS/tipCP_STA/';
+prjPath = '/mnt/lima/huy/data0/20221128_TetraCU428Membrane_26k_TS/Singlet_STA/';
 
 
 %%%%%%%%
@@ -24,7 +24,7 @@ alnDir = sprintf('%sintraAln_repick', prjPath);
 particleDir = sprintf('%sparticles_repick', prjPath);
 boxSize = 60; % Original extracted subvolume size
 mw = 10; % Number of parallel workers to run
-gpu = [0]; % Alignment using gpu for titann setting
+gpu = [0 1]; % Alignment using gpu for titann setting
 pixelSize = 14.00; % Angstrom per pixel
 avgLowpass = 30; % In Angstrom to convert to Fourier Pixel
 alnLowpass = 30; % In Angstrom to convert to Fourier Pixel, better higher than 40 Angstrom for tubulin
@@ -104,7 +104,8 @@ for idx = 1:length(filamentList)
 
     % Preview
     img = sum(filamentAvg(:,:,floor(boxSize/2) - 10: floor(boxSize/2) + 10), 3);
-    imwrite(mat2gray(img), ['preview/' filamentList{idx} '.png'])
+    img_rotated = flipud(img');
+    imwrite(mat2gray(img_rotated), ['preview/' filamentList{idx} '.png'])
 end
 
 cd ..

@@ -5,6 +5,7 @@
 % Polarity check & compare to C1 and C2 ref 
 % derived from dynamoMT/mt_sortPFs.m
 % The new list will contain 3 columns (Filament, polarity, C1 or C2)
+% Also, the 
 
 %%%%%%%% Before Running Script %%%%%%%%%%%%%%%
 
@@ -19,21 +20,21 @@ prjPath = '/mnt/lima/huy/data0/20221128_TetraCU428Membrane_26k_TS/tipCP_STA/';
 %%%%%%% Variables subject to change %%%%%%%%%%%
 pixelSize = 14.00;
 boxSize = 60;
-filamentListFile = 'filamentList.csv';
-alnDir = sprintf('%sintraAln', prjPath);
-particleDir = sprintf('%sparticles', prjPath);
+filamentListFile = 'filamentRepickList.csv';
+alnDir = sprintf('%sintraAln_repick', prjPath);
+particleDir = sprintf('%sparticles_repick', prjPath);
 previewDir =[alnDir '/preview']; % created previously
 mw = 12; % Number of parallel workers to run
 gpu = [0]; % Alignment using gpu
 initRefFiles = {'templates/tipC1_14.00Apx_new.em', 'templates/tipC2_14.00Apx_new.em'};
 refPFs = [1 2];
-coneFlip = 1; % Search for polarity. 1 is yes.
+coneFlip = 0; % Search for polarity. Should be 0 here.
 avgLowpass = 25; % Angstrom
 alnLowpass = 25; % Angstrom
-shiftLimit = [5 5 3]; % Limit XYZ in pixel. Z should be half of periodicity
-newRefFile = 'average_sortCP.em';
-filamentCPListFile = sprintf('%sfilamentCPList.csv', prjPath);
-CClistFile = sprintf('%sCCList.csv', prjPath);
+shiftLimit = [5 5 4]; % Limit XYZ in pixel. Z should be half of periodicity
+newRefFile = 'average_sortRepickCP.em';
+filamentCPListFile = sprintf('%sfilamentRepickCPList.csv', prjPath);
+CClistFile = sprintf('%sCCListRepick.csv', prjPath);
 maskFile = sprintf('%smask_cylinder.em', prjPath); % Cylinder mask, must be quite big
 
 
@@ -60,7 +61,8 @@ cd(alnDir)
 % transform the corresponding table for all particles
 % For CClist, we will have tomoNo,filamentNo, CC_ref1, CC_ref2
 
-CClist = zeros(noFilament,  2 + length(template));
+CClist = zeros(noFilament,  5 + length(template));
+
 for idx = 1:noFilament
 	aPath = ddb([filamentList{idx} ':a']); % Read the path of the alignment project average
 	tPath = ddb([filamentList{idx} ':rt']);
@@ -72,7 +74,7 @@ for idx = 1:noFilament
   	maxPF = 0;
 	CClist(idx, 1:2) = tFilament(1, [20 23]);
   	for refIdx = 1:length(template)
-  		sal{refIdx} = dalign(dynamo_bandpass(filamentAvg,[1 alnLowpassPix]), dynamo_bandpass(template{refIdx},[1 alnLowpassPix]),'mask', maskFile, 'cr',10,'cs',5,'ir',360,'is',10,'dim',boxSize, 'limm',1,'lim',shiftLimit,'rf',2,'rff',2, 'cone_flip', coneFlip); % cone_flip
+  		sal{refIdx} = dalign(dynamo_bandpass(filamentAvg,[1 alnLowpassPix]), dynamo_bandpass(template{refIdx},[1 alnLowpassPix]),'mask', maskFile, 'cr', 9,'cs',3,'ir',15,'is',3,'dim',boxSize, 'limm',1,'lim',shiftLimit,'rf',2,'rff',2, 'cone_flip', coneFlip); % cone_flip
 		
 		if sal{refIdx}.ccmax(end) > maxCC
 			maxCC = sal{refIdx}.ccmax(end);
@@ -112,15 +114,15 @@ for idx = 1:noFilament
 	disp([filamentList{idx} ' Polarity ' num2str(filamentCPList{idx, 2}) ' and class C' num2str(refPFs(maxPF))]);
 	% Write PF list
 	filamentCPList{idx, 1} = filamentList{idx};
-	%filamentCPList{idx, 3} = refPFs(maxPF); 
+	filamentCPList{idx, 3} = refPFs(maxPF); 
 	   
 end
  
 cd ..
 
 % ReCheck the assignment
-% Sample CClist matrix (n x 4), where columns are: tomoNo, filamentNo, CC1, CC2
-% CClist = [tomoNo, filamentNo, CC1, CC2];
+% Sample CClist matrix (n x 7), where columns are: tomoNo, filamentNo, CC1, CC2, CP, CC1-CC2, FinalCP
+% CClist = [tomoNo, filamentNo, CC1, CC2, CP, abs(CC1-CC2), FinalCP];
 % Compute the 5th column: 1 if CC1 > CC2, otherwise 2
 CClist(:,5) = (CClist(:,4) > CClist(:,3)) + 1;  
 
@@ -170,16 +172,13 @@ writecell(filamentCPList, filamentCPListFile);
 
 % Write separate list files for different PFs
 numPF = cell2mat(filamentCPList(:, 3));
-
-averageAll = [];
 for refIdx = 1:length(refPFs)
 	subFilamentList = filamentCPList(numPF == refPFs(refIdx), :);
 	if isempty(subFilamentList)
 		disp(['No filament with C' num2str(refPFs(refIdx))]);
 	else
+		writecell(subFilamentList, strrep(filamentCPListFile, '.csv', ['C' num2str(refPFs(refIdx)) '.csv']));
 		newTemplate{refIdx} = newTemplate{refIdx}/length(subFilamentList);
-		dwrite(newTemplate{refIdx}, strrep(newRefFile, '.em', ['_C' num2str(refPFs(refIdx)) '.em']));
+		dwrite(newTemplate{refIdx}, strrep(newRefFile, '.em', ['_C' num2str(refPFs(refIdx)) '.em']))
 	end
 end
-
-dwrite(newTemplate{1} + newTemplate{2}, newRefFile);

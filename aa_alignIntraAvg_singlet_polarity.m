@@ -10,7 +10,7 @@ run /data2/apps/dynamo/1.1.546/dynamo_activate.m
 %run /storage/software/Dynamo/dynamo_activate.m
 
 % Change path to the correct directory
-prjPath = '/lima/huy/data0/20221128_TetraCU428Membrane_26k_TS/Singlet_STA/';
+prjPath = '/mnt/lima/huy/data0/20221128_TetraCU428Membrane_26k_TS/Singlet_STA/';
 
 
 %%%%%%% Variables subject to change %%%%%%%%%%%
@@ -27,7 +27,7 @@ coneFlip = 0; % Search for polarity. 1 is yes. Should be 0 default for this scri
 avgLowpass = 28; % Angstrom
 alnLowpass = 28; % Angstrom
 shiftLimit = [10 10 4]; % Limit XYZ in pixel. Z should be half of periodicity
-newRefFile = 'average_intraAln_singlet.em';
+newRefFile = 'average_intraAvg.em';
 filamentPolarityListFile = sprintf('%sfilamentListPolarity.csv', prjPath);
 maskFile = sprintf('%smask_cylinder.em', prjPath); % Cylinder mask, must be quite big
 ciliaPolarityFile = sprintf('%sciliaPolarity.csv', prjPath);
@@ -87,7 +87,7 @@ for idx = 1:noFilament
 	end
 	
   	disp(['Align ' filamentList{idx}]);
-  	sal = dalign(dynamo_bandpass(flippedVol,[1 alnLowpassPix]), dynamo_bandpass(template,[1 alnLowpassPix]), 'mask', maskFile,'cr',10,'cs',5,'ir',360,'is',10,'dim',boxSize, 'limm',1,'lim',shiftLimit,'rf',2,'rff',2, 'cone_flip', coneFlip); % cone_flip
+  	sal = dalign(dynamo_bandpass(flippedVol,[1 alnLowpassPix]), dynamo_bandpass(template,[1 alnLowpassPix]),'mask', maskFile, 'cr',10,'cs',5,'ir',360,'is',10,'dim',boxSize, 'limm',1,'lim',shiftLimit,'rf',2,'rff',2, 'cone_flip', coneFlip); % cone_flip
 	
 	% Write out the transform
 	writematrix([sal.p_shifts sal.p_eulers], [particleDir '/' filamentList{idx} '/xform.tbl'], 'Delimiter', 'tab', 'FileType', 'text');
@@ -131,4 +131,5 @@ writecell(filamentPolarityList, filamentPolarityListFile);
 
 newTemplate = newTemplate/noFilament;
 dwrite(newTemplate, newRefFile)
+
 

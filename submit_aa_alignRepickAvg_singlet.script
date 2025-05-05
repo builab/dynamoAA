@@ -1,0 +1,16 @@
+#!/bin/bash
+#SBATCH --ntasks=1                
+#SBATCH --partition=ampere
+#SBATCH --job-name=alnRepickAvg # Job name
+#SBATCH --error=alnRepickAvg.err
+#SBATCH --output=alnRepickAvg.out
+#SBATCH --cpus-per-task=12
+#SBATCH --gres=gpu:2
+#SBATCH --nodes=1
+#SBATCH --mem-per-cpu=15GB
+
+module load matlab
+module load dynamo
+
+
+matlab -nodisplay < dynamoAA/aa_alignRepickAvg_singlet.m

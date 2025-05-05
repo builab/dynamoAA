@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --ntasks=1                
-#SBATCH --partition=ada
+#SBATCH --partition=ampere
 #SBATCH --job-name=alnRepickPart # Job name
 #SBATCH --error=aa_alnRepickPart.err
 #SBATCH --output=aa_alnRepickPart.out
@@ -13,5 +13,4 @@ module load matlab
 module load dynamo
 
 
-matlab -nodisplay < dynamoAA/aa_alignRepickParticles_tipCP_C1.m
-matlab -nodisplay < dynamoAA/aa_alignRepickParticles_tipCP_C2.m
+matlab -nodisplay < dynamoAA/aa_alignRepickParticles_singlet.m

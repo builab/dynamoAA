@@ -18,14 +18,15 @@
 %%%% 
 
 %%%%%% Activate Dynamo %%%%%%%%%%%%%%%%%%%%%%%%
-run /storage/software/Dynamo/dynamo_activate.m
+run /london/data0/software/dynamo/dynamo_activate.m
+%run /data2/apps/dynamo/1.1.546/dynamo_activate.m
 
 %%%%%%% Variables subject to change %%%%%%%%%%%
 
-modDir = '/storage/builab/Thibault/20241216_TetraCHE12over_TS/warp_tiltseries/reconstruction/';
-prjPath = '/storage/builab/Thibault/20241216_TetraCHE12over_TS/Doublet_STA/';
-modFileDelimiter = '*_doublets.mod';
-stringToBeRemoved = '_14.00Apx_doublets.mod';
+modDir = '/lima/huy/data0/20221128_TetraCU428Membrane_26k_TS/warp_tiltseries/reconstruction/';
+prjPath = '/lima/huy/data0/20221128_TetraCU428Membrane_26k_TS/Singlet_STA/';
+modFileDelimiter = '*_singlets.mod';
+stringToBeRemoved = '_14.00Apx_singlets.mod';
 recSuffix = '_14.00Apx';
 apixel = '14.00';
 useWarpRec = 1;

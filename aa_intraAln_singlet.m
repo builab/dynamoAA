@@ -6,10 +6,11 @@
 
 %%%%%%%% Before Running Script %%%%%%%%%%%%%%%
 %%% Activate Dynamo
-run /storage/software/Dynamo/dynamo_activate.m
+%run /london/data0/software/dynamo/dynamo_activate.m
+run /data2/apps/dynamo/1.1.546/dynamo_activate.m 
 
 % Change path to the correct directory
-prjPath = '/storage/builab/Thibault/20241216_TetraCHE12over_TS/Doublet_STA/';
+prjPath = '/lima/huy/data0/20221128_TetraCU428Membrane_26k_TS/Singlet_STA/';
 
 %%%%%%% Variables subject to change %%%%%%%%%%%
 
@@ -17,13 +18,13 @@ docFilePath = sprintf('%scatalogs/tomograms.doc', prjPath);
 filamentListFile = sprintf('%sfilamentList.csv', prjPath);
 alnDir = sprintf('%sintraAln', prjPath);
 particleDir = sprintf('%sparticles', prjPath);
-boxSize = 64; % Original extracted subvolume size
+boxSize = 60; % Original extracted subvolume size
 mw = 12; % Number of parallel workers to run
-gpu = [0]; % Alignment using gpu for titann setting
+gpu = [0 1]; % Alignment using gpu for titan setting
 pixelSize = 14.00; % Angstrom per pixel
 avgLowpass = 30; % In Angstrom to convert to Fourier Pixel
 alnLowpass = 30; % In Angstrom to convert to Fourier Pixel, 50 if you only need to align the filament well, 35-40Angstrom for clear tubulin MT
-zshift_limit = 4; % ~4nm 
+zshift_limit = 4; % ~4nm, a bit more is because round 1 is used to align the MT center. 
 
 %%%%%%% Do not change anything under here %%%%%
 
@@ -78,8 +79,6 @@ for idx = 1:length(filamentList)
     
     % Preview
     img = sum(filamentAvg(:,:,floor(boxSize/2) - 5: floor(boxSize/2) + 5), 3);
-    % .png preview is rotated 90 deg clockwise, so we rotate 90 deg CC
-    img_rotated = flipud(img');
     imwrite(mat2gray(img), ['preview/' filamentList{idx} '.png'])
 end
 
