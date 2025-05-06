@@ -11,19 +11,19 @@
 run /storage/software/Dynamo/dynamo_activate.m
 
 % Change path to the correct directory
-prjPath = '/storage/builab/Thibault/20241216_TetraCHE12over_TS/Doublet_STA/';
+prjPath = '/storage/builab/Thibault/20241216_TetraCHE12over_TS/tipCP_STA/';
 
 %%%%%%% Variables subject to change %%%%%%%%%%%
 
 pixelSize = 14.00;
-boxSize = 64;
+boxSize = 60;
 filamentListFileManualRot= 'filamentListPolarity.csv';
 alnDir = sprintf('%sintraAln', prjPath);
 particleDir = sprintf('%sparticles', prjPath);
 previewDir =[alnDir '/preview']; % created from previously
 mw = 2; % Number of parallel workers to run
 avgLowpass = 28; % Angstrom
-manualFilamentPolarityListFile = sprintf('%smanualFilamentListPolarity.csv', prjPath);
+manualFilamentPolarityListFile = sprintf('%smanualFilamentCPList.csv', prjPath);
 
 
 %%%%%%% Do not change anything under here %%%%%

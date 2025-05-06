@@ -10,7 +10,7 @@ run /data2/apps/dynamo/1.1.546/dynamo_activate.m
 %run /storage/software/Dynamo/dynamo_activate.m
 
 % Change path to the correct directory
-prjPath = '/mnt/lima/huy/data0/20221128_TetraCU428Membrane_26k_TS/Singlet_STA/';
+prjPath = '/mnt/lima/huy/data0/20221128_TetraCU428Membrane_26k_TS/tipCP_STA/';
 
 
 %%%%%%% Variables subject to change %%%%%%%%%%%
@@ -22,7 +22,7 @@ particleDir = sprintf('%sparticles', prjPath);
 previewDir =[alnDir '/preview']; % created previously
 mw = 12; % Number of parallel workers to run
 gpu = [0]; % Alignment using gpu
-initRefFile = 'templates/Singlet_SPEF1_14.00Apx.em';
+initRefFile = 'templates/tipC1_14.00Apx_new.em';
 coneFlip = 0; % Search for polarity. 1 is yes. Should be 0 default for this script
 avgLowpass = 28; % Angstrom
 alnLowpass = 28; % Angstrom

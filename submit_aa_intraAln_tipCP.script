@@ -13,4 +13,4 @@ module load matlab
 module load dynamo
 
 
-matlab -nodisplay < dynamoAA/aa_intraAln.m
+matlab -nodisplay < dynamoAA/aa_intraAln_tipCP.m

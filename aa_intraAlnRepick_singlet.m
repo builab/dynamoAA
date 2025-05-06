@@ -8,8 +8,8 @@
 
 %%%%%%%% Before Running Script %%%%%%%%%%
 %%% Activate Dynamo
-%run /london/data0/software/dynamo/dynamo_activate.m
-run /data2/apps/dynamo/1.1.546/dynamo_activate.m 
+run /data2/apps/dynamo/1.1.546/dynamo_activate.m
+%run /storage/software/Dynamo/dynamo_activate.m
 
 % Change path to the correct directory
 prjPath = '/mnt/lima/huy/data0/20221128_TetraCU428Membrane_26k_TS/Singlet_STA/';

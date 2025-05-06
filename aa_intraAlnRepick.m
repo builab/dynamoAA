@@ -8,7 +8,8 @@
 
 %%%%%%%% Before Running Script %%%%%%%%%%
 %%% Activate Dynamo
-run /storage/software/Dynamo/dynamo_activate.m
+run /data2/apps/dynamo/1.1.546/dynamo_activate.m
+%run /storage/software/Dynamo/dynamo_activate.m
 
 % Change path to the correct directory
 prjPath = '/storage/builab/Thibault/20241216_TetraCHE12over_TS/Doublet_STA/';
@@ -102,7 +103,8 @@ for idx = 1:length(filamentList)
 
     % Preview
     img = sum(filamentAvg(:,:,floor(boxSize/2) - 10: floor(boxSize/2) + 10), 3);
-    imwrite(mat2gray(img), ['preview/' filamentList{idx} '.png'])
+    img_rotated = flipud(img');
+    imwrite(mat2gray(img_rotated), ['preview/' filamentList{idx} '.png'])
 end
 
 cd ..

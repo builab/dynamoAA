@@ -6,8 +6,8 @@
 
 %%%%%%%% Before Running Script %%%%%%%%%%%%%%%
 %%% Activate Dynamo
-%run /london/data0/software/dynamo/dynamo_activate.m
-run /data2/apps/dynamo/1.1.546/dynamo_activate.m 
+run /data2/apps/dynamo/1.1.546/dynamo_activate.m
+%run /storage/software/Dynamo/dynamo_activate.m
 
 % Change path to the correct directory
 prjPath = '/lima/huy/data0/20221128_TetraCU428Membrane_26k_TS/Singlet_STA/';
@@ -79,7 +79,8 @@ for idx = 1:length(filamentList)
     
     % Preview
     img = sum(filamentAvg(:,:,floor(boxSize/2) - 5: floor(boxSize/2) + 5), 3);
-    imwrite(mat2gray(img), ['preview/' filamentList{idx} '.png'])
+    img_rotated = flipud(img');
+    imwrite(mat2gray(img_rotated), ['preview/' filamentList{idx} '.png'])
 end
 
 cd ..

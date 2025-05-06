@@ -10,7 +10,7 @@ run /data2/apps/dynamo/1.1.546/dynamo_activate.m
 %run /storage/software/Dynamo/dynamo_activate.m
 
 % Change path to the correct directory
-prjPath = '/storage/builab/Thibault/20241216_TetraCHE12over_TS/Doublet_STA/';
+prjPath = '/storage/builab/Thibault/20241216_TetraCHE12over_TS/TipCP_STA/';
 
 %%%%%%% Variables subject to change %%%%%%%%%%%
 
@@ -18,7 +18,7 @@ docFilePath = sprintf('%scatalogs/tomograms.doc', prjPath);
 filamentListFile = sprintf('%sfilamentList.csv', prjPath);
 alnDir = sprintf('%sintraAln', prjPath);
 particleDir = sprintf('%sparticles', prjPath);
-boxSize = 64; % Original extracted subvolume size
+boxSize = 60; % Original extracted subvolume size
 mw = 12; % Number of parallel workers to run
 gpu = [0]; % Alignment using gpu for titann setting
 pixelSize = 14.00; % Angstrom per pixel
