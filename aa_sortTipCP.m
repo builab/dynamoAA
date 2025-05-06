@@ -91,8 +91,8 @@ for idx = 1:noFilament
 	filt_aligned_particle = dynamo_bandpass(sal{maxPF}.aligned_particle, [1 round(pixelSize/avgLowpass*boxSize)]);
 	img = sum(filt_aligned_particle(:,:,floor(boxSize/2) - 10: floor(boxSize/2) + 10), 3);
 	% .png preview is rotated 90 deg clockwise, so we rotate 90 deg CC
-    	img_rotated = flipud(img');
-	imwrite(mat2gray(img), [previewDir '/' filamentList{idx} '_aln_C' num2str(refPFs(maxPF)) '.png']);
+    img_rotated = flipud(img');
+	imwrite(mat2gray(img_rotated), [previewDir '/' filamentList{idx} '_aln_C' num2str(refPFs(maxPF)) '.png']);
 	% Read last table from alignment
 	%tFilament = dread(tPath);
 	% Read last transformation & applied to table
