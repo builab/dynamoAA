@@ -5,6 +5,7 @@
 % DynamoMT v0.1 (identical for 13 & 14 PF)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% WARNING: Can only run once
 
 %%%%%%%% Before Running Script %%%%%%%%%%
 %%% Activate Dynamo
@@ -18,7 +19,7 @@ prjPath = '/storage/builab/Thibault/20241216_TetraCHE12over_TS/tipCP_STA/';
 
 pixelSize = 14.00;
 boxSize = 60;
-filamentListFileManualRot= 'filamentListPolarity.csv';
+filamentListFileManualRot= 'filamentListPolarity.csv'; % Original list file with wrong polarity
 alnDir = sprintf('%sintraAln', prjPath);
 particleDir = sprintf('%sparticles', prjPath);
 previewDir =[alnDir '/preview']; % created from previously
