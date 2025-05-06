@@ -52,8 +52,13 @@ for idx = 1:noFilament
 	Tp.eulers = t_xform(1, 4:6);
 
 	% Read last table from alignment
-    tPath = ([particleDir '/' filamentList{idx, 1} '/aligned.tbl']); 
-	tFilament = dread(tPath);
+	tPath = fullfile(particleDir, filamentList{idx, 1}, 'aligned.tbl');
+	tPath_orig = fullfile(particleDir, filamentList{idx, 1}, 'aligned_orig.tbl');
+	if ~exist(tPath_orig, 'file')
+  	  	copyfile(tPath, tPath_orig);
+	end
+	tFilament = dread(tPath_orig);
+	
 	% Read manual transformation & applied to table and overwrite the
     % aligned.tbl
 	tFilament_ali = dynamo_table_rigid(tFilament, Tp);

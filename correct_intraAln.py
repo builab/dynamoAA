@@ -6,6 +6,8 @@ import io
 import base64
 import argparse
 
+# Written by Jerry Gao, modified by Huy Bui
+
 # Parse command-line arguments
 parser = argparse.ArgumentParser()
 parser.add_argument("--img-dir", default="intraAln/preview", help="Directory containing the images")

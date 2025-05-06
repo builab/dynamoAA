@@ -56,8 +56,9 @@ for idx = 1:noFilament
 	% Read last table from alignment
 	tPath = fullfile(particleDir, filamentList{idx, 1}, 'aligned.tbl');
 	tPath_orig = fullfile(particleDir, filamentList{idx, 1}, 'aligned_orig.tbl');
-	copyfile(tPath, tPath_orig);
-	tFilament = dread(tPath_orig);
+	if ~exist(tPath_orig, 'file')
+  	  	copyfile(tPath, tPath_orig);
+	end
 	% Read manual transformation & applied to table and overwrite the
     % aligned.tbl
 	tFilament_ali = dynamo_table_rigid(tFilament, Tp);
