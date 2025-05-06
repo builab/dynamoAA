@@ -74,7 +74,7 @@ for idx = 1:noFilament
   	maxPF = 0;
 	CClist(idx, 1:2) = tFilament(1, [20 23]);
   	for refIdx = 1:length(template)
-  		sal{refIdx} = dalign(dynamo_bandpass(filamentAvg,[1 alnLowpassPix]), dynamo_bandpass(template{refIdx},[1 alnLowpassPix]),'mask', maskFile, 'cr', 9,'cs',3,'ir',15,'is',3,'dim',boxSize, 'limm',1,'lim',shiftLimit,'rf',2,'rff',2, 'cone_flip', coneFlip); % cone_flip
+  		sal{refIdx} = dalign(dynamo_bandpass(filamentAvg,[1 alnLowpassPix]), dynamo_bandpass(template{refIdx},[1 alnLowpassPix]),'mask', maskFile, 'cr', 9,'cs',3,'ir',27,'is',3,'dim',boxSize, 'limm',1,'lim',shiftLimit,'rf',2,'rff',2, 'cone_flip', coneFlip); % cone_flip
 		
 		if sal{refIdx}.ccmax(end) > maxCC
 			maxCC = sal{refIdx}.ccmax(end);
